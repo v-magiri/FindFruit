@@ -6,13 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/dashboardControls"
+        tools:ignore="MissingConstraints">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:strokeWidth="3dp"
+            android:layout_marginVertical="32dp"
+            android:layout_marginHorizontal="20dp"
+            app:strokeColor="@color/orange"
+            app:cardCornerRadius="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/pick_image"
+                    android:layout_marginVertical="10dp"
+                    android:id="@+id/pickImageView"
+                    android:layout_gravity="center"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select an Image"
+                    android:layout_marginHorizontal="10dp"
+                    android:id="@+id/imagePickerBtn"
+                    android:background="@drawable/dashboard_button"
+                    app:backgroundTint="@null"
+                    android:layout_marginVertical="10dp"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:strokeWidth="3dp"
+            android:layout_marginHorizontal="20dp"
+            app:strokeColor="@color/orange"
+            app:cardCornerRadius="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_camera_image"
+                    android:layout_marginVertical="10dp"
+                    android:id="@+id/cameraImage"
+                    android:layout_gravity="center"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Take A Picture"
+                    android:layout_marginHorizontal="10dp"
+                    android:id="@+id/cameraImageView"
+                    android:background="@drawable/dashboard_button"
+                    app:backgroundTint="@null"
+                    android:layout_marginVertical="10dp"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
