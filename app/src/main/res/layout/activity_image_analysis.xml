@@ -5,9 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Image_Analysis">
+    <include
+        layout="@layout/appbar"
+        android:id="@+id/topBar"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/topBar"
         android:orientation="vertical">
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
