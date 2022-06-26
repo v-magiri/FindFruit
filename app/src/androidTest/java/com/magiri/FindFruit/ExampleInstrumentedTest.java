@@ -1,4 +1,4 @@
-package com.magiri.hci_assigno;
+package com.magiri.FindFruit;
 
 import android.content.Context;
 

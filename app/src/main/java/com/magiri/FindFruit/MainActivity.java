@@ -1,4 +1,4 @@
-package com.magiri.hci_assigno;
+package com.magiri.FindFruit;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==Image_Pick_Code && resultCode== RESULT_OK && data!= null && data.getData()!=null){
+        if(requestCode==Image_Pick_Code && resultCode == RESULT_OK && data != null){
             filePath=data.getData();
             try{
                 Bitmap bitmap=MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
@@ -94,16 +96,29 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        if(requestCode==CAMERA_REQUEST && resultCode==RESULT_OK &&data!= null && data.getData()!=null){
+        else if(requestCode==CAMERA_REQUEST && resultCode==RESULT_OK && data != null){
             Bitmap cameraBitmap=(Bitmap) data.getExtras().get("data");
             OpenImageAnalysis(cameraBitmap);
+        }
+        else{
+            Toast toast=Toast.makeText(getApplicationContext(),"Please Choose a Fruit Photo",Toast.LENGTH_SHORT);
+            View view=toast.getView();
+            view.getBackground().setColorFilter(Color.parseColor("#FD612F"), PorterDuff.Mode.SRC_IN);
+            TextView text=view.findViewById(android.R.id.message);
+            text.setTextColor(Color.parseColor("#FFFFFF"));
+            text.setTextSize(16);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
         }
     }
 
     private void OpenImageAnalysis(Bitmap bitmap) {
         //startActivity for Image Analysis
         Intent imageAnalysisIntent=new Intent(this,Image_Analysis.class);
-        imageAnalysisIntent.putExtra("FruitImage",bitmap);
+         ByteArrayOutputStream bs=new ByteArrayOutputStream();
+         bitmap.compress(Bitmap.CompressFormat.PNG,100,bs);
+        imageAnalysisIntent.putExtra("FruitImage",bs.toByteArray());
         startActivity(imageAnalysisIntent);
     }
+
 }

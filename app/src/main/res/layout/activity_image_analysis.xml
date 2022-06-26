@@ -10,22 +10,46 @@
         android:id="@+id/topBar"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/topBar"
+        android:id="@+id/FruitImg"
         android:orientation="vertical">
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="300dp"
             app:strokeColor="@color/orange"
-            app:strokeWidth="1.5dp"
+            app:strokeWidth="3dp"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp">
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:src="@drawable/fruit_collection"
                 android:id="@+id/ImageTakenImg"/>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/FruitImg">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="50dp"
+            android:src="@drawable/pick_image"
+            android:layout_alignParentStart="true"
+            android:scaleType="centerInside"
+            android:id="@+id/galleryImageView"/>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_camera_image"
+            android:layout_alignParentEnd="true"
+            android:scaleType="centerInside"
+            android:id="@+id/cameraImageView"/>
+    </RelativeLayout>
 
 </RelativeLayout>
