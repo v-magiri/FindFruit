@@ -29,9 +29,19 @@
                 android:id="@+id/ImageTakenImg"/>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginVertical="50dp"
+        android:visibility="gone"
+        android:text="Select Photo"
+        android:layout_below="@+id/FruitImg"
+        android:background="@drawable/dashboard_button"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/FruitImg">
         <ImageView
@@ -51,5 +61,11 @@
             android:scaleType="centerInside"
             android:id="@+id/cameraImageView"/>
     </RelativeLayout>
+    <include
+        layout="@layout/bottomsheet_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/FruitImg"/>
 
 </RelativeLayout>

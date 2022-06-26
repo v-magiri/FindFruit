@@ -30,7 +30,7 @@ public class Image_Analysis extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 24;
     private static final int Image_Pick_Code=101;
     Uri filePath;
-    private ImageView galleryImageView, cameraImageView;
+    private ImageView galleryImageView, cameraImageView,backImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +38,13 @@ public class Image_Analysis extends AppCompatActivity {
         FruitImageView=findViewById(R.id.ImageTakenImg);
         galleryImageView=findViewById(R.id.galleryImageView);
         cameraImageView=findViewById(R.id.cameraImageView);
+        backImageView=findViewById(R.id.backBtn );
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         getData();
         galleryImageView.setOnClickListener(new View.OnClickListener() {
             @Override
