@@ -9,11 +9,13 @@
         <entry key="app/src/main/res/drawable/readmore_bg.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/result_bg.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/slider_bg.xml" value="0.1565" />
+        <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.1565" />
         <entry key="app/src/main/res/layout/activity_image_analysis.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/appbar.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/bottomsheet_dialog.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/image_picker_bottomsheet.xml" value="0.25" />
       </map>
     </option>
   </component>

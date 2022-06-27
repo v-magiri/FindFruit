@@ -33,6 +33,7 @@
             android:text="Read more"
             android:textColor="@color/white"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:textSize="20sp"
             android:background="@drawable/readmore_bg"
             android:layout_alignParentEnd="true"/>
@@ -41,8 +42,12 @@
             android:layout_height="30dp"
             android:src="@drawable/ic_speaker"
             android:layout_centerVertical="true"
+            android:id="@+id/speakerImageView"
             android:layout_marginLeft="50dp"
             android:layout_alignParentStart="true"/>
     </RelativeLayout>
+
+<!--    HCIFindFruit-->
+
 
 </RelativeLayout>
