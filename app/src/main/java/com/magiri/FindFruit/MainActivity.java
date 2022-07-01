@@ -1,5 +1,6 @@
 package com.magiri.FindFruit;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -27,6 +28,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 23;
     private static final int CAMERA_REQUEST = 24;
+    private static final int Camera_Request_CODE=43;
     private static final int Image_Pick_Code=101;
     Uri filePath;
     private Button takePicImageView,pickPicImageView;
@@ -49,6 +51,25 @@ public class MainActivity extends AppCompatActivity {
                 requestReadPermission();
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==MY_PERMISSIONS_REQUEST_CAMERA && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent , CAMERA_REQUEST);
+        }
+        else{
+            Toast toast=Toast.makeText(getApplicationContext(),"Allow Camera Permissions Please",Toast.LENGTH_SHORT);
+            View view=toast.getView();
+            view.getBackground().setColorFilter(Color.parseColor("#949494"), PorterDuff.Mode.SRC_IN);
+            TextView text=view.findViewById(android.R.id.message);
+            text.setTextColor(Color.parseColor("#FFFFFF"));
+            text.setTextSize(16);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
+        }
     }
 
     private void checkCameraPermission() {

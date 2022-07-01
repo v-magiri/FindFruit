@@ -9,8 +9,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -21,11 +24,27 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import java.util.List;
 
 public class SplashScreen extends AppCompatActivity {
-
+    Handler splashScreenHandler;
+    private Button nextBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        splashScreenHandler=new Handler();
+        nextBtn=findViewById(R.id.nextButton);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }
+        });
+
+//        splashScreenHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+////                startActivity(new Intent(SplashScreen.this,MainActivity.class));
+//            }
+//        },3000);
     }
 
     @Override
@@ -43,7 +62,6 @@ public class SplashScreen extends AppCompatActivity {
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         if(multiplePermissionsReport.areAllPermissionsGranted()){
                             Log.e(TAG, "onPermissionsChecked: Permission Granted");
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else if(multiplePermissionsReport.isAnyPermissionPermanentlyDenied()){
                             showSettingsDialog();
                         }

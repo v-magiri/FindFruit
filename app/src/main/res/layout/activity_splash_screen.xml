@@ -28,5 +28,16 @@
         android:textStyle="bold"
         android:layout_below="@+id/welcomeTxt"
         android:textColor="@color/white"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        app:backgroundTint="@null"
+        android:id="@+id/nextButton"
+        android:background="@drawable/getstarted_bg"
+        android:textSize="22sp"/>
 
 </RelativeLayout>
