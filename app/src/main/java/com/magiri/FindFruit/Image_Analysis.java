@@ -220,13 +220,13 @@ public class Image_Analysis extends AppCompatActivity {
 // Check if % >= 80. if yes, print the suggestion else image could not be classified
 
             String [] classes = {"Apple","Banana","Orange"};
-            fruitNameTxt.setText(classes[maxPos]);
+//            fruitNameTxt.setText(classes[maxPos]);
 
-//            if (maxConfidence >= 0.84){
-//                fruitNameTxt.setText(classes[maxPos]);
-//            }else{
-//                fruitNameTxt.setText("Unclassfied ");
-//            }
+            if (maxConfidence >= 0.90){
+                fruitNameTxt.setText(classes[maxPos]);
+            }else{
+                fruitNameTxt.setText("Unclassfied");
+            }
 
             // Releases model resources if no longer used.
             model.close();
