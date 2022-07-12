@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         //startActivity for Image Analysis
         Intent imageAnalysisIntent=new Intent(this,Image_Analysis.class);
          ByteArrayOutputStream bs=new ByteArrayOutputStream();
-         bitmap.compress(Bitmap.CompressFormat.PNG,100,bs);
+         bitmap.compress(Bitmap.CompressFormat.JPEG,60,bs);
         imageAnalysisIntent.putExtra("FruitImage",bs.toByteArray());
         startActivity(imageAnalysisIntent);
     }
