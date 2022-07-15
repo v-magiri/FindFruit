@@ -4,18 +4,23 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.1565" />
+        <entry key="app/src/main/res/drawable/dashboard_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/dashboard_button.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/getstarted_bg.xml" value="0.119" />
         <entry key="app/src/main/res/drawable/ic_splashsreen_img.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/play_game_background.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/readmore_bg.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/result_bg.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/slider_bg.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.1565" />
+        <entry key="app/src/main/res/layout/activity_find_fruit_dash_board.xml" value="0.15534420289855072" />
         <entry key="app/src/main/res/layout/activity_image_analysis.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/activity_play_fruit_game.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/appbar.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/bottomsheet_dialog.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/fruit_game_appbar.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/image_picker_bottomsheet.xml" value="0.25" />
       </map>
     </option>

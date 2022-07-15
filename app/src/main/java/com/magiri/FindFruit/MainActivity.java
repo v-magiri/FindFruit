@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 24;
     private static final int Camera_Request_CODE=43;
     private static final int Image_Pick_Code=101;
+    ImageView backBtn;
     Uri filePath;
     private Button takePicImageView,pickPicImageView;
     @Override
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         takePicImageView=findViewById(R.id.cameraImageView);
         pickPicImageView=findViewById(R.id.imagePickerBtn);
+        backBtn=findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(v -> finish());
         //take a picture using a camera
         takePicImageView.setOnClickListener(new View.OnClickListener() {
             @Override
