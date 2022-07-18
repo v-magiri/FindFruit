@@ -14,6 +14,8 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -26,12 +28,14 @@ import java.util.List;
 public class SplashScreen extends AppCompatActivity {
     Handler splashScreenHandler;
     private Button nextBtn;
+    private LinearLayout SplashText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         splashScreenHandler=new Handler();
         nextBtn=findViewById(R.id.nextButton);
+        SplashText=findViewById(R.id.splashTxt);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +55,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         requestAppPermission();
+
     }
 
     private void requestAppPermission() {

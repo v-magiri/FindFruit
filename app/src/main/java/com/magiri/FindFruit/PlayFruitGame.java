@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.MediaParser;
 import android.media.MediaPlayer;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,8 @@ public class PlayFruitGame extends AppCompatActivity {
     AlertDialog wrongDialog,successDialog;
     Handler imageChangeHandler;
     private Button doneBtn,continueBtn;
+    private SharedPreferences sharedPre;
+    public static final String CurrentScore="FindFruitScore";
     MediaPlayer mp;
     private static final int SPEECH_REQUEST_CODE=1;
     int FruitImageIds[]={R.drawable.banana_img,R.drawable.apple_img,R.drawable.passion_img
@@ -145,6 +149,8 @@ public class PlayFruitGame extends AppCompatActivity {
         String currentScore=scoreTxt.getText().toString();
         reduceScore(currentScore);
         wrongDialog=alertDialogBuilder.create();
+        //set the background FrameLayout to transparent
+        wrongDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         wrongDialog.show();
     }
 
@@ -169,6 +175,7 @@ public class PlayFruitGame extends AppCompatActivity {
         String currentScore=scoreTxt.getText().toString();
         addScore(currentScore);
         successDialog=alertDialogBuilder.create();
+        successDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         successDialog.show();
         count++;
         imageChangeHandler.postDelayed(new Runnable() {
