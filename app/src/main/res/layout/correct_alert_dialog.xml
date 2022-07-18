@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/correctImageView"
+        android:src="@drawable/ic_accept"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp"
+        android:id="@+id/answerLayout"
+        android:layout_below="@+id/correctImageView"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Perfect"
+            android:textSize="24sp"
+            android:textColor="@color/green"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:id="@+id/congratsTxt"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fruit Name Appears Here"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/orange"
+            android:id="@+id/FruitNameTxt"/>
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/continueBtn"
+        android:textSize="20sp"
+        android:background="@drawable/dashboard_button"
+        android:layout_below="@+id/answerLayout"
+        android:textStyle="bold"
+        android:text="Continue"/>
+
+</RelativeLayout>

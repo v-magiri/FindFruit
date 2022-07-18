@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginVertical="10dp"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_wrong"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/wrongImageView"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp"
+        android:id="@+id/answerLayout"
+        android:layout_below="@+id/wrongImageView"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Oops"
+            android:textSize="24sp"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:id="@+id/congratsTxt"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fruit Name Appears Here"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/orange"
+            android:id="@+id/FruitNameTxt"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/tryAgainBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/answerLayout"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/dashboard_button"
+        android:text="Try Again"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
