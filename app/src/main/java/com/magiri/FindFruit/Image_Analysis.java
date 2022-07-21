@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,6 +15,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.ThumbnailUtils;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -115,14 +118,33 @@ public class Image_Analysis extends AppCompatActivity {
         readMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://en.wikipedia.org/wiki/"+fruitNameTxt.getText().toString();
-                readMoreWebView.setWebViewClient(new FindFruitWebClient());
-                readMoreWebView.getSettings().setJavaScriptEnabled(true);
-                readMoreWebView.loadUrl(url);
-                progressDialog.show();
-                readMoreWebView.setVisibility(View.VISIBLE);
+                //check network info
+                if(isNetworkAvailable()) {
+                    String url = "https://en.wikipedia.org/wiki/" + fruitNameTxt.getText().toString();
+                    readMoreWebView.setWebViewClient(new FindFruitWebClient());
+                    readMoreWebView.getSettings().setJavaScriptEnabled(true);
+                    readMoreWebView.loadUrl(url);
+                    progressDialog.show();
+                    readMoreWebView.setVisibility(View.VISIBLE);
+                }
+                else{
+                    Toast toast=Toast.makeText(getApplicationContext(),"You Do not have Network Connection",Toast.LENGTH_SHORT);
+                    View view=toast.getView();
+                    view.getBackground().setColorFilter(Color.parseColor("#949494"), PorterDuff.Mode.SRC_IN);
+                    TextView text=view.findViewById(android.R.id.message);
+                    text.setTextColor(Color.parseColor("#FFFFFF"));
+                    text.setTextSize(16);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
+                }
             }
         });
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkStatus= connectivityManager.getActiveNetworkInfo();
+        return networkStatus!=null;
     }
 
 

@@ -23,43 +23,101 @@
             android:scaleType="fitCenter"
             android:src="@drawable/fruit_game"/>
     </androidx.cardview.widget.CardView>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/answerSectionLayout"
-        android:layout_below="@+id/fruitImageView"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="10dp"
-                android:layout_marginHorizontal="10dp"
-                android:background="@drawable/play_game_background"
-                android:id="@+id/SpeechIconImageView"
-                android:src="@drawable/ic_microphone"/>
-
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="10dp"
-                android:layout_marginHorizontal="10dp"
-                android:id="@+id/textIconImageView"
-                android:background="@drawable/play_game_background"
-                android:src="@drawable/ic_edit"/>
-    </LinearLayout>
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fruitImageView"
+        android:text="1/8"
+        android:textFontWeight="700"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:background="@drawable/play_game_background"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/orange"
+        android:id="@+id/GameLevel"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/actionLayout"
+        android:layout_marginHorizontal="20dp"
+        android:weightSum="7"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/GameLevel"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/answerTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/show_answer_background"
+            android:drawablePadding="2dp"
+            android:text="Show Answer"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            app:drawableLeftCompat="@drawable/ic_eye" />
+        <ImageView
+            android:id="@+id/SpeechIconImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/play_game_background"
+            android:padding="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:src="@drawable/ic_microphone" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_weight="2"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="10dp"
+            android:id="@+id/textIconImageView"
+            android:layout_toRightOf="@+id/SpeechIconImageView"
+            android:background="@drawable/play_game_background"
+            android:src="@drawable/ic_edit"/>
+    </LinearLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Banana"
-        android:layout_below="@+id/answerSectionLayout"
-        android:textAlignment="center"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/KidsAnswerLayout"
         android:layout_marginVertical="24dp"
-        android:textSize="24sp"
-        android:id="@+id/FruitImageViewAnswer"
-        android:textColor="@color/orange"
-        android:textStyle="bold"/>
+        android:layout_below="@+id/actionLayout">
+
+        <EditText
+            android:id="@+id/answerEditTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/answer_background"
+            android:hint="Answer Appears Here"
+            android:textAlignment="center"
+            android:textCursorDrawable="@drawable/cursor_drawable"
+            android:textColorHint="@color/orange"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:layout_marginHorizontal="20dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/submitBtn"
+        android:layout_below="@+id/KidsAnswerLayout"
+        android:background="@drawable/dashboard_background"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:layout_marginHorizontal="20dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:id="@+id/continueBtn"
+        android:layout_below="@+id/KidsAnswerLayout"
+        android:background="@drawable/dashboard_background"/>
 
 
 </RelativeLayout>

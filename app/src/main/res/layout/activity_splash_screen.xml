@@ -7,27 +7,32 @@
     app:backgroundTint="@null"
     android:layout_height="match_parent"
     tools:context=".SplashScreen">
-
-    <TextView
-        android:id="@+id/welcomeTxt"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome"
-        android:textAlignment="center"
-        android:textSize="42sp"
-        android:textStyle="bold"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/white"/>
-    <TextView
-        android:id="@+id/appTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="To Find Fruit"
-        android:textAlignment="center"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:layout_below="@+id/welcomeTxt"
-        android:textColor="@color/white"/>
+        android:id="@+id/splashTxt"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/welcomeTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome"
+            android:textAlignment="center"
+            android:textSize="42sp"
+            android:textStyle="bold"
+            android:layout_marginTop="100dp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/appTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To Find Fruit"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/welcomeTxt"
+            android:textColor="@color/black"/>
+    </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
