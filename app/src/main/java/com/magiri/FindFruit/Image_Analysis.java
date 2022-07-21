@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,12 +15,16 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -55,7 +60,9 @@ public class Image_Analysis extends AppCompatActivity {
     private ImageView galleryImageView, cameraImageView,backImageView;
     private TextView fruitNameTxt;
     private ImageView speakImageView;
-    private Button SelectPhotoBtn;
+    private TextView readMoreButton;
+    private WebView readMoreWebView;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +71,14 @@ public class Image_Analysis extends AppCompatActivity {
         galleryImageView=findViewById(R.id.galleryImageView);
         cameraImageView=findViewById(R.id.cameraImageView);
         backImageView=findViewById(R.id.backBtn );
-        SelectPhotoBtn=findViewById(R.id.optionsBtn);
+        readMoreButton=findViewById(R.id.readMoreBtn);
         speakImageView=findViewById(R.id.speakerImageView);
         fruitNameTxt=findViewById(R.id.result);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("Please Wait");
+        progressDialog.setMessage("Opening Web Page");
+        progressDialog.setCanceledOnTouchOutside(false);
+        readMoreWebView=findViewById(R.id.FindFruitWebView);
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
@@ -74,108 +86,58 @@ public class Image_Analysis extends AppCompatActivity {
                 // if No error is found then only it will run
                 if(i!=TextToSpeech.ERROR){
                     // To Choose language of speech
-                    textToSpeech.setLanguage(Locale.US);
+                    textToSpeech.setLanguage(Locale.forLanguageTag("en-KE"));
+                    if(i==TextToSpeech.LANG_MISSING_DATA || i ==TextToSpeech.LANG_NOT_SUPPORTED){
+                        Toast.makeText(Image_Analysis.this, "Language Not Supported", Toast.LENGTH_SHORT).show();
+                    }
+                    textToSpeech.setSpeechRate(1.0F);
+                    textToSpeech.setPitch(0.6f);
+                    speak();
                 }
             }
         });
+        textToSpeech.getVoices();
         // create an object textToSpeech and adding features into it
         getData();
 
         speakImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textToSpeech.speak(fruitNameTxt.getText().toString(),TextToSpeech.QUEUE_ADD,null);
+                speak();
             }
         });
-//        SelectPhotoBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                displayBottomSheet();
-//            }
-//        });
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-//        galleryImageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(ContextCompat.checkSelfPermission(Image_Analysis.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-//                    ActivityCompat.requestPermissions(Image_Analysis.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},12);
-//                }else{
-//                    SelectImage();
-//                }
-//            }
-//        });
-//        cameraImageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                checkCameraPermission();
-//            }
-//        });
+        readMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://en.wikipedia.org/wiki/"+fruitNameTxt.getText().toString();
+                readMoreWebView.setWebViewClient(new FindFruitWebClient());
+                readMoreWebView.getSettings().setJavaScriptEnabled(true);
+                readMoreWebView.loadUrl(url);
+                progressDialog.show();
+                readMoreWebView.setVisibility(View.VISIBLE);
+            }
+        });
     }
-//    private void checkCameraPermission() {
-//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//            Toast toast=Toast.makeText(getApplicationContext(),"Allow Camera Permissions Please",Toast.LENGTH_SHORT);
-//            View view=toast.getView();
-//            view.getBackground().setColorFilter(Color.parseColor("#949494"), PorterDuff.Mode.SRC_IN);
-//            TextView text=view.findViewById(android.R.id.message);
-//            text.setTextColor(Color.parseColor("#FFFFFF"));
-//            text.setTextSize(16);
-//            toast.setGravity(Gravity.CENTER,0,0);
-//            toast.show();
-//            ActivityCompat.requestPermissions(Image_Analysis.this,  new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
-//
-//        } else {
-//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            startActivityForResult(intent , CAMERA_REQUEST);
-//        }
-//    }
-//    private void SelectImage() {
-//        Intent intent=new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent,"Select Fruit Image"),Image_Pick_Code);
-//    }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode==Image_Pick_Code && resultCode == RESULT_OK && data != null){
-//            filePath=data.getData();
-//            try{
-//                Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
-////                OpenImageAnalysis(bitmap);
-//                displayImage(bitmap);
-////                FruitImageView.setImageBitmap(bitmap);
-//            }catch (IOException e){
-//                e.printStackTrace();
-//            }
-//        }
-//        else if(requestCode==CAMERA_REQUEST && resultCode==RESULT_OK && data!=null){
-//                Bitmap cameraBitmap=(Bitmap) data.getExtras().get("data");
-////                FruitImageView.setImageBitmap(cameraBitmap);
-//                displayImage(cameraBitmap);
-//        }
-//
-//        else{
-//            Toast toast=Toast.makeText(getApplicationContext(),"Please Choose a Fruit Photo",Toast.LENGTH_SHORT);
-//            View view=toast.getView();
-//            view.getBackground().setColorFilter(Color.parseColor("#FD612F"), PorterDuff.Mode.SRC_IN);
-//            TextView text=view.findViewById(android.R.id.message);
-//            text.setTextColor(Color.parseColor("#FFFFFF"));
-//            text.setTextSize(16);
-//            toast.setGravity(Gravity.CENTER,0,0);
-//            toast.show();
-//        }
-//    }
 
-//    private void displayImage(Bitmap FruitImageBitmap) {
-////        displayBottomSheet();
-//        FruitImageView.setImageBitmap(FruitImageBitmap);
-//    }
+    private void getData() {
+        Bitmap FruitImageBitmap =
+                BitmapFactory.
+                        decodeByteArray(getIntent().
+                        getByteArrayExtra("FruitImage"), 0, getIntent().getByteArrayExtra("FruitImage").length);
+        int dimension=Math.min(FruitImageBitmap.getWidth(),FruitImageBitmap.getHeight());
+        FruitImageBitmap = ThumbnailUtils.extractThumbnail(FruitImageBitmap,dimension,dimension);
+        FruitImageView.setImageBitmap(FruitImageBitmap);
+        FruitImageBitmap=Bitmap.createScaledBitmap(FruitImageBitmap,imageSize,imageSize,false);
+        classifyImage(FruitImageBitmap);
+        textToSpeech.speak(fruitNameTxt.getText().toString(),TextToSpeech.QUEUE_ADD,null);
+    }
     public void  classifyImage(Bitmap image){
         try {
             Model1 model = Model1.newInstance(getApplicationContext());
@@ -234,56 +196,42 @@ public class Image_Analysis extends AppCompatActivity {
             // TODO Handle the exception
         }
     }
-//    private void displayBottomSheet() {
-//        final BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(Image_Analysis.this,R.style.BottomSheetDialogTheme);
-//        View BottomSheetView= LayoutInflater.from(Image_Analysis.this).inflate(R.layout.image_picker_bottomsheet,(RelativeLayout)findViewById(R.id.OptionBottomSheet));
-//        bottomSheetDialog.setContentView(BottomSheetView);
-//        bottomSheetDialog.show();
-//        BottomSheetView.findViewById(R.id.camera).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                    Toast toast=Toast.makeText(getApplicationContext(),"Allow Camera Permissions Please",Toast.LENGTH_SHORT);
-//                    View view=toast.getView();
-//                    view.getBackground().setColorFilter(Color.parseColor("#949494"), PorterDuff.Mode.SRC_IN);
-//                    TextView text=view.findViewById(android.R.id.message);
-//                    text.setTextColor(Color.parseColor("#FFFFFF"));
-//                    text.setTextSize(16);
-//                    toast.setGravity(Gravity.CENTER,0,0);
-//                    toast.show();
-//                    ActivityCompat.requestPermissions(Image_Analysis.this,  new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
-//
-//                } else {
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    startActivityForResult(intent , CAMERA_REQUEST);
-//                    bottomSheetDialog.dismiss();
-//                }
-//            }
-//        });
-//        BottomSheetView.findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(ContextCompat.checkSelfPermission(Image_Analysis.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-//                    ActivityCompat.requestPermissions(Image_Analysis.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},12);
-//                }else{
-//                    SelectImage();
-//                    bottomSheetDialog.dismiss();
-//                }
-//            }
-//        });
-//    }
 
-    private void getData() {
-        Bitmap FruitImageBitmap =
-                BitmapFactory.
-                        decodeByteArray(getIntent().
-                        getByteArrayExtra("FruitImage"), 0, getIntent().getByteArrayExtra("FruitImage").length);
-        int dimension=Math.min(FruitImageBitmap.getWidth(),FruitImageBitmap.getHeight());
-        FruitImageBitmap = ThumbnailUtils.extractThumbnail(FruitImageBitmap,dimension,dimension);
-        FruitImageView.setImageBitmap(FruitImageBitmap);
-        FruitImageBitmap=Bitmap.createScaledBitmap(FruitImageBitmap,imageSize,imageSize,false);
-        classifyImage(FruitImageBitmap);
-        textToSpeech.speak(fruitNameTxt.getText().toString(),TextToSpeech.QUEUE_ADD,null);
-
+    private void speak() {
+        String FruitName=fruitNameTxt.getText().toString();
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            textToSpeech.speak(FruitName,TextToSpeech.QUEUE_FLUSH,null,null);
+        }else{
+            textToSpeech.speak(FruitName,TextToSpeech.QUEUE_FLUSH,null);
+        }
     }
+
+    @Override
+    protected void onDestroy() {
+        if(textToSpeech!=null){
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
+    }
+    private class FindFruitWebClient extends WebViewClient{
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            progressDialog.dismiss();
+        }
+    }
+
 }

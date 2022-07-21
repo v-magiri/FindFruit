@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/fruit_collection"
                 android:id="@+id/ImageTakenImg"/>
         </com.google.android.material.card.MaterialCardView>
@@ -51,7 +52,7 @@
             android:layout_height="50dp"
             android:src="@drawable/pick_image"
             android:layout_alignParentStart="true"
-            android:scaleType="centerInside"
+            android:scaleType="fitXY"
             android:id="@+id/galleryImageView"/>
         <ImageView
             android:layout_width="50dp"
@@ -62,11 +63,18 @@
             android:scaleType="centerInside"
             android:id="@+id/cameraImageView"/>
     </RelativeLayout>
+
     <include
         layout="@layout/bottomsheet_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/FruitImg"/>
+        android:layout_below="@+id/FruitImg"
+        android:layout_marginTop="50dp" />
+    <WebView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:id="@+id/FindFruitWebView"
+        android:scrollbars="none"/>
 
 </RelativeLayout>
