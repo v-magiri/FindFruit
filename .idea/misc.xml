@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/layout/bottomsheet_dialog.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/correct_alert_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fruit_game_appbar.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/game_completion_dialog.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/image_picker_bottomsheet.xml" value="0.25" />
         <entry key="app/src/main/res/layout/wrong_answer.xml" value="0.33" />
       </map>

@@ -14,10 +14,12 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -30,16 +32,17 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class PlayFruitGame extends AppCompatActivity {
+    private static final String TAG = "FIND_FRUIT_GAME";
     ImageView FruitImageView,backBtn;
     ImageView speechImageView,textImageView;
     private EditText answerEditText;
     TextView FruitImageAnswer,showAnswerTxt,scoreTxt,gameLevelTxt;
     boolean isGivenHint = false;
-    AlertDialog wrongDialog,successDialog;
+    AlertDialog wrongDialog,successDialog,completeGameDialog;
     Handler imageChangeHandler;
     private Button doneBtn,continueBtn;
-    private SharedPreferences sharedPre;
-    public static final String CurrentScore="FindFruitScore";
+    private static final String FINDFRUIT_GAME ="com.magiri.FindFruit.FruitGame";
+    private static final String Fruit_Game_Score ="FruitGame_Score";
     MediaPlayer mp;
     private static final int SPEECH_REQUEST_CODE=1;
     int FruitImageIds[]={R.drawable.banana_img,R.drawable.apple_img,R.drawable.passion_img
@@ -83,7 +86,14 @@ public class PlayFruitGame extends AppCompatActivity {
         textImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //open the key board when the text option is clicked and set the curosror tot the editext
+
+                InputMethodManager imm = (InputMethodManager) PlayFruitGame.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+
                 answerEditText.setCursorVisible(true);
+
             }
         });
         showAnswerTxt.setOnClickListener(new View.OnClickListener() {
@@ -192,18 +202,28 @@ public class PlayFruitGame extends AppCompatActivity {
             Context context=PlayFruitGame.this;
             AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(context);
             LayoutInflater layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view=layoutInflater.inflate(R.layout.correct_alert_dialog,null);
+            View view=layoutInflater.inflate(R.layout.game_completion_dialog,null);
             alertDialogBuilder.setView(view);
             alertDialogBuilder.setCancelable(false);
-            TextView FruitName=view.findViewById(R.id.FruitNameTxt);
-            int Score=Integer.parseInt((String) scoreTxt.getText());
-            FruitName.setText(String.valueOf(Score));
+            Button backHomeBtn=view.findViewById(R.id.backHomeBtn);
+            ImageView achievementImageView=view.findViewById(R.id.successImageView);
+            achievementImageView.startAnimation(AnimationUtils.loadAnimation(this,R.anim.continuous_zoom_animation));
+            backHomeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(),FindFruitDashBoard.class));
+                    finish();
+                }
+            });
+            completeGameDialog=alertDialogBuilder.create();
+            completeGameDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            completeGameDialog.show();
         }
     }
 
     private void CloseAlertUpdateUI() {
         answerEditText.setText("");
-        gameLevelTxt.setText(count+"/"+FruitImageIds.length);
+        gameLevelTxt.setText(count+1+"/"+FruitImageIds.length);
         wrongDialog.dismiss();
     }
 
@@ -211,7 +231,7 @@ public class PlayFruitGame extends AppCompatActivity {
         changeFruitImage();
         answerEditText.setText("");
         successDialog.dismiss();
-        gameLevelTxt.setText(count+"/"+FruitImageIds.length);
+        gameLevelTxt.setText(count+1+"/"+FruitImageIds.length);
         isGivenHint=false;
     }
 
@@ -229,5 +249,16 @@ public class PlayFruitGame extends AppCompatActivity {
             scoreTxt.setText(String.valueOf(++Score));
         }
 
+    }
+    //store the highest score when the user stop & Game level Status the application
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        int Score=Integer.parseInt(scoreTxt.getText().toString());
+        SharedPreferences FindFruit=getSharedPreferences(FINDFRUIT_GAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=FindFruit.edit();
+        editor.putInt(Fruit_Game_Score,Score);
+        Log.d(TAG, "StoreScore: Saved Game Score "+Score);
     }
 }
