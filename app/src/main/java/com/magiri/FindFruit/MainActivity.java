@@ -145,5 +145,4 @@ public class MainActivity extends AppCompatActivity {
         imageAnalysisIntent.putExtra("FruitImage",bs.toByteArray());
         startActivity(imageAnalysisIntent);
     }
-
 }
