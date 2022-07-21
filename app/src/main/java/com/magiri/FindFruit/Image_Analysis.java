@@ -50,6 +50,7 @@ import java.nio.ByteOrder;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class Image_Analysis extends AppCompatActivity {
@@ -190,27 +191,27 @@ public class Image_Analysis extends AppCompatActivity {
             // Runs model inference and gets result.
             Model1.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
+            String [] classes = {"Apple","Banana","Orange"};
             float [] confidences = outputFeature0.getFloatArray();
+            HashMap<String,String> map=new HashMap<>();
 //            find the class with highest confidence
             int maxPos = 0;
             float maxConfidence = 0;
+            fruitNameTxt.setText(classes[0]+" : "+confidences[0]+" : "+classes[1]+" : "+confidences[1]+"\n"+classes[2]+" : "+confidences[2]);
             for (int i = 0; i < confidences.length;i++){
                 if(confidences[i] > maxConfidence){
                     maxConfidence = confidences[i];
-                    maxPos = i;
+//                    maxPos = i;
                 }
+
             }
 // Check if % >= 80. if yes, print the suggestion else image could not be classified
 
-            String [] classes = {"Apple","Banana","Orange"};
-            fruitNameTxt.setText(classes[maxPos]);
-
-//            if (maxConfidence >= 0.84){
-//                fruitNameTxt.setText(classes[maxPos]);
-//            }else{
-//                fruitNameTxt.setText("Unclassfied ");
-//            }
+            if (maxConfidence >= 0.84){
+                fruitNameTxt.setText(classes[maxPos]);
+            }else{
+                fruitNameTxt.setText("Unclassfied ");
+            }
 
             // Releases model resources if no longer used.
             model.close();
