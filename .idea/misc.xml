@@ -4,7 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/answer_background.xml" value="0.2005" />
+        <entry key="app/src/main/res/drawable/answer_background.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/cursor_drawable.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/dashboard_background.xml" value="0.1" />
@@ -38,5 +38,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.19270833333333334" />
+      </ProjectState>
+    </option>
   </component>
 </project>

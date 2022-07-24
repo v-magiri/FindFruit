@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -43,13 +44,13 @@ public class PlayFruitGame extends AppCompatActivity {
     private Button doneBtn,continueBtn;
     private static final String FINDFRUIT_GAME ="com.magiri.FindFruit.FruitGame";
     private static final String Fruit_Game_Score ="FruitGame_Score";
+    private static final String GameLevel="FindFruit_GameLevel";
     MediaPlayer mp;
     private static final int SPEECH_REQUEST_CODE=1;
-    int FruitImageIds[]={R.drawable.banana_img,R.drawable.apple_img,R.drawable.passion_img
-            ,R.drawable.pear_img,R.drawable.mango_img,R.drawable.mango_img1,R.drawable.pawpaw_img,
-            R.drawable.red_passion_img};
-    String FruitLabels[]={"Banana","Apple","Passion Fruit","Pears","Mango","Mango","PawPaw","Passion Fruit"};
-    int count=0;
+    int FruitImageIds[]={R.drawable.banana_img,R.drawable.apple_img,R.drawable.orange_image,R.drawable.green_apple,R.drawable.growing_apple,R.drawable.banana,
+                        R.drawable.cut_apple,R.drawable.banana_bunch,R.drawable.orange};
+    String FruitLabels[]={"Banana","Apple","Orange","Apple","Apple","Banana","Apple","Banana","Orange"};
+    int count,score=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +67,13 @@ public class PlayFruitGame extends AppCompatActivity {
         textImageView=findViewById(R.id.textIconImageView);
         FruitImageAnswer=findViewById(R.id.FruitNameTxt);
         gameLevelTxt=findViewById(R.id.GameLevel);
-        gameLevelTxt.setText(count+1+"/"+FruitImageIds.length);
         doneBtn=findViewById(R.id.submitBtn);
-        FruitImageView.setImageResource(FruitImageIds[0]);
+        SharedPreferences storedPref=getSharedPreferences(FINDFRUIT_GAME,Context.MODE_PRIVATE);
+        score=storedPref.getInt(Fruit_Game_Score,0);
+        count=storedPref.getInt(GameLevel,0);
+        scoreTxt.setText(String.valueOf(score));
+        FruitImageView.setImageResource(FruitImageIds[count]);
+        gameLevelTxt.setText(count+1+"/"+FruitImageIds.length);
         speechImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,24 +88,25 @@ public class PlayFruitGame extends AppCompatActivity {
                 }
             }
         });
-        textImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open the key board when the text option is clicked and set the curosror tot the editext
+        answerEditText.setOnClickListener(v -> answerEditText.setCursorVisible(true));
+        textImageView.setOnClickListener(v -> {
+            //open the key board when the text option is clicked and set the cursor tot the edittext
 
-                InputMethodManager imm = (InputMethodManager) PlayFruitGame.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) PlayFruitGame.this.getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 
-                answerEditText.setCursorVisible(true);
+            answerEditText.setCursorVisible(true);
 
-            }
         });
         showAnswerTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                answerEditText.setSelection(FruitLabels[count].length());
                 answerEditText.setText(FruitLabels[count]);
                 isGivenHint=true;
+                String currentScore=scoreTxt.getText().toString();
+                reduceScore(currentScore);
             }
         });
         doneBtn.setOnClickListener(new View.OnClickListener() {
@@ -153,8 +159,6 @@ public class PlayFruitGame extends AppCompatActivity {
         FruitName.setText(userAnswer);
         mp=MediaPlayer.create(getApplicationContext(),R.raw.wrong_answer_audio);
         mp.start();
-        String currentScore=scoreTxt.getText().toString();
-        reduceScore(currentScore);
         wrongDialog=alertDialogBuilder.create();
         //set the background FrameLayout to transparent
         wrongDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -194,9 +198,13 @@ public class PlayFruitGame extends AppCompatActivity {
             imageChangeHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    SharedPreferences FindFruit=getSharedPreferences(FINDFRUIT_GAME,Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=FindFruit.edit();
+                    editor.putInt(GameLevel,count);
+                    editor.commit();
                     FruitImageView.setImageResource(FruitImageIds[count]);
                 }
-            },2000);
+            },1000);
         }else{
             //display Finish Game Alert Dialog
             Context context=PlayFruitGame.this;
@@ -246,19 +254,13 @@ public class PlayFruitGame extends AppCompatActivity {
     private void addScore(String currentScore) {
         if(!isGivenHint){
             int Score=Integer.parseInt(currentScore);
+            SharedPreferences FindFruit=getSharedPreferences(FINDFRUIT_GAME,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=FindFruit.edit();
+            editor.putInt(Fruit_Game_Score,Score);
+            editor.apply();
             scoreTxt.setText(String.valueOf(++Score));
         }
 
     }
     //store the highest score when the user stop & Game level Status the application
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        int Score=Integer.parseInt(scoreTxt.getText().toString());
-        SharedPreferences FindFruit=getSharedPreferences(FINDFRUIT_GAME,Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=FindFruit.edit();
-        editor.putInt(Fruit_Game_Score,Score);
-        Log.d(TAG, "StoreScore: Saved Game Score "+Score);
-    }
 }

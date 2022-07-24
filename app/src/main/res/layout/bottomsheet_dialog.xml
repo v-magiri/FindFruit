@@ -44,7 +44,7 @@
         android:layout_below="@+id/result"
         android:background="@drawable/readmore_bg" />
 
-<!--    HCIFindFruit-->
+    <!--    HCIFindFruit-->
 
 
 </RelativeLayout>

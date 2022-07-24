@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.magiri.FindFruit.ml.Model1;
+import com.magiri.FindFruit.ml.FindFruitModel;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.schema.Model;
@@ -162,7 +162,7 @@ public class Image_Analysis extends AppCompatActivity {
     }
     public void  classifyImage(Bitmap image){
         try {
-            Model1 model = Model1.newInstance(getApplicationContext());
+            FindFruitModel model = FindFruitModel.newInstance(getApplicationContext());
 
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 32, 32, 3}, DataType.FLOAT32);
@@ -188,7 +188,7 @@ public class Image_Analysis extends AppCompatActivity {
             inputFeature0.loadBuffer(byteBuffer);
 
             // Runs model inference and gets result.
-            Model1.Outputs outputs = model.process(inputFeature0);
+            FindFruitModel.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
             float [] confidences = outputFeature0.getFloatArray();
