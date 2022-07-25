@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -112,17 +113,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int imageSize=224;
         if(requestCode==Image_Pick_Code && resultCode == RESULT_OK && data != null){
             filePath=data.getData();
+            Bitmap bitmap=null;
             try{
-                Bitmap bitmap=MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
-                OpenImageAnalysis(bitmap);
+                bitmap=MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
             }catch (IOException e){
                 e.printStackTrace();
             }
+//            bitmap=Bitmap.createScaledBitmap(bitmap,imageSize,imageSize,false);
+            OpenImageAnalysis(bitmap);
         }
         else if(requestCode==CAMERA_REQUEST && resultCode==RESULT_OK && data != null){
             Bitmap cameraBitmap=(Bitmap) data.getExtras().get("data");
+            int dimensions=Math.min(cameraBitmap.getWidth(),cameraBitmap.getHeight());
+            cameraBitmap= ThumbnailUtils.extractThumbnail(cameraBitmap,dimensions,dimensions);
+            cameraBitmap=Bitmap.createScaledBitmap(cameraBitmap,imageSize,imageSize,false);
             OpenImageAnalysis(cameraBitmap);
         }
         else{

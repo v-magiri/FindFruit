@@ -102,8 +102,8 @@ public class PlayFruitGame extends AppCompatActivity {
         showAnswerTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                answerEditText.setSelection(FruitLabels[count].length());
                 answerEditText.setText(FruitLabels[count]);
+                answerEditText.setSelection(FruitLabels[count].length());
                 isGivenHint=true;
                 String currentScore=scoreTxt.getText().toString();
                 reduceScore(currentScore);

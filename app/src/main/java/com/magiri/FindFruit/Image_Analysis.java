@@ -57,7 +57,7 @@ public class Image_Analysis extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 23;
     private static final int CAMERA_REQUEST = 24;
     private static final int Image_Pick_Code=101;
-    int imageSize = 32;
+    int imageSize = 224;
     TextToSpeech textToSpeech;
     Uri filePath;
     private ImageView galleryImageView, cameraImageView,backImageView;
@@ -165,7 +165,7 @@ public class Image_Analysis extends AppCompatActivity {
             FindFruitModel model = FindFruitModel.newInstance(getApplicationContext());
 
             // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 32, 32, 3}, DataType.FLOAT32);
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
@@ -179,9 +179,9 @@ public class Image_Analysis extends AppCompatActivity {
             for (int i = 0; i < imageSize;i++){
                 for (int j=0;j <imageSize; j++){
                     int val = intValues[pixel++];
-                    byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f/1));
-                    byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f/1));
-                    byteBuffer.putFloat((val & 0xFF) * (1.f/1));
+                    byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f/255.f));
+                    byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f/255.f));
+                    byteBuffer.putFloat((val & 0xFF) * (1.f/255.f));
                 }
             }
 
@@ -206,10 +206,10 @@ public class Image_Analysis extends AppCompatActivity {
             String [] classes = {"Apple","Banana","Orange"};
 //            fruitNameTxt.setText(classes[maxPos]);
 
-            if (maxConfidence >= 0.90){
+            if (maxConfidence >= 0.50){
                 fruitNameTxt.setText(classes[maxPos]);
             }else{
-                fruitNameTxt.setText("Unclassfied");
+                fruitNameTxt.setText(R.string.unclassifiedTxt);
             }
 
             // Releases model resources if no longer used.

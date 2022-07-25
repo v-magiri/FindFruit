@@ -3,4 +3,5 @@
     <string name="dashboard_text">What Will You Do ?</string>
     <string name="FindFruitTxt">Find A Fruit</string>
     <string name="playGameTxt">Play Fruit Game</string>
+    <string name="unclassifiedTxt">Unclassified</string>
 </resources>
