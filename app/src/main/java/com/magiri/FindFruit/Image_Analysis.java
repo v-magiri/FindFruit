@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.magiri.FindFruit.ml.FindFruitModel;
+import com.magiri.FindFruit.ml.FruitFindModel;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.schema.Model;
@@ -162,7 +162,7 @@ public class Image_Analysis extends AppCompatActivity {
     }
     public void  classifyImage(Bitmap image){
         try {
-            FindFruitModel model = FindFruitModel.newInstance(getApplicationContext());
+            FruitFindModel model = FruitFindModel.newInstance(getApplicationContext());
 
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
@@ -188,7 +188,7 @@ public class Image_Analysis extends AppCompatActivity {
             inputFeature0.loadBuffer(byteBuffer);
 
             // Runs model inference and gets result.
-            FindFruitModel.Outputs outputs = model.process(inputFeature0);
+            FruitFindModel.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
             float [] confidences = outputFeature0.getFloatArray();
@@ -204,13 +204,13 @@ public class Image_Analysis extends AppCompatActivity {
 // Check if % >= 80. if yes, print the suggestion else image could not be classified
 
             String [] classes = {"Apple","Banana","Orange"};
-//            fruitNameTxt.setText(classes[maxPos]);
+            fruitNameTxt.setText(classes[maxPos]);
 
-            if (maxConfidence >= 0.50){
-                fruitNameTxt.setText(classes[maxPos]);
-            }else{
-                fruitNameTxt.setText(R.string.unclassifiedTxt);
-            }
+//            if (maxConfidence >= 0.90){
+//                fruitNameTxt.setText(classes[maxPos]);
+//            }else{
+//                fruitNameTxt.setText("Unclassfied");
+//            }
 
             // Releases model resources if no longer used.
             model.close();
