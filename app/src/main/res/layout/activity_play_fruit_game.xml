@@ -10,7 +10,7 @@
         android:id="@+id/fruitgameAppbar"/>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_marginVertical="32dp"
+        android:layout_marginVertical="20dp"
         android:layout_height="wrap_content"
         android:id="@+id/fruitImageView"
         android:layout_below="@+id/fruitgameAppbar"
@@ -23,26 +23,12 @@
             android:scaleType="fitCenter"
             android:src="@drawable/fruit_game"/>
     </androidx.cardview.widget.CardView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fruitImageView"
-        android:text="1/8"
-        android:textFontWeight="700"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
-        android:background="@drawable/play_game_background"
-        android:layout_marginRight="30dp"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/orange"
-        android:id="@+id/GameLevel"/>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/actionLayout"
         android:layout_marginHorizontal="20dp"
         android:weightSum="7"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/GameLevel"
+        android:layout_below="@+id/fruitImageView"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/answerTxt"
@@ -52,7 +38,8 @@
             android:drawablePadding="2dp"
             android:text="Show Answer"
             android:layout_weight="2"
-            android:layout_gravity="center_vertical"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:textColor="@color/orange"
             android:textSize="18sp"
             app:drawableLeftCompat="@drawable/ic_eye" />
@@ -61,7 +48,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="2"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/play_game_background"
             android:padding="10dp"
             android:layout_marginHorizontal="20dp"
@@ -74,50 +62,69 @@
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="10dp"
             android:id="@+id/textIconImageView"
-            android:layout_toRightOf="@+id/SpeechIconImageView"
+            android:visibility="gone"
             android:background="@drawable/play_game_background"
             android:src="@drawable/ic_edit"/>
-    </LinearLayout>
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:id="@+id/KidsAnswerLayout"
-        android:layout_marginVertical="24dp"
+        android:layout_marginVertical="10dp"
         android:layout_below="@+id/actionLayout">
-
-        <EditText
-            android:id="@+id/answerEditTxt"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/answer_background"
-            android:hint="Answer Appears Here"
-            android:textAlignment="center"
-            android:textCursorDrawable="@drawable/cursor_drawable"
-            android:textColorHint="@color/orange"
-            android:textSize="20sp" />
+            android:id="@+id/answers_Mcq">
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Banana"
+                android:textSize="20sp"
+                android:textColorHint="@color/orange"
+                android:textColor="@color/orange"
+                android:id="@+id/firstOption"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Apple"
+                android:textSize="20sp"
+                android:textColor="@color/orange"
+                android:id="@+id/secondOption"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Orange"
+                android:textSize="20sp"
+                android:textColor="@color/orange"
+                android:id="@+id/thirdOption"/>
+        </RadioGroup>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/answerEditTxt"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="25dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/KidsAnswerLayout"
+        android:background="@drawable/answer_background"
+        android:visibility="gone"
+        android:textColor="@color/orange"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Done"
         android:layout_marginHorizontal="20dp"
         android:textStyle="bold"
+        android:layout_marginVertical="5dp"
         android:textSize="20sp"
         android:id="@+id/submitBtn"
-        android:layout_below="@+id/KidsAnswerLayout"
+        android:layout_below="@+id/answerEditTxt"
         android:background="@drawable/dashboard_background"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Continue"
-        android:layout_marginHorizontal="20dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:visibility="gone"
-        android:id="@+id/continueBtn"
-        android:layout_below="@+id/KidsAnswerLayout"
-        android:background="@drawable/dashboard_background"/>
+
 
 
 </RelativeLayout>

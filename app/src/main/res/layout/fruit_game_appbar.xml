@@ -10,14 +10,36 @@
         android:layout_height="30dp"
         android:src="@drawable/ic_back_btn"
         android:id="@+id/FruitGameBackBtn"/>
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fruit Game"
-        android:textColor="@color/orange"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_marginLeft="80dp"
+        android:id="@+id/game_Name">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/fruitNameTextView"
+            android:text="Fruit Game"
+            android:layout_centerVertical="true"
+            android:textColor="@color/orange"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/GameLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/fruitNameTextView"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="1/8"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/orange" />
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_gravity="end"
